@@ -1,0 +1,1573 @@
+{
+	"info": {
+		"_postman_id": "5d434618-9f22-4b84-953e-d69b104e7cc3",
+		"name": "ECommerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24818235"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "AuthController",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Set token as collection variables",
+											"var token = pm.response.headers.get(\"Authorization\");",
+											"pm.collectionVariables.set(\"token\", token);",
+											"",
+											"// test expected status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// declare expected schema",
+											"var userSchema = {",
+											"    \"type\" : \"object\",",
+											"    \"properties\" : {",
+											"        \"userId\" : {\"type\" : \"number\"},",
+											"        \"email\" : {\"type\" : \"string\"},",
+											"        \"firstName\" : {\"type\" : \"string\"},",
+											"        \"lastName\" : {\"type\" : \"string\"},",
+											"        \"active\" : {\"type\" : \"boolean\"},",
+											"        \"admin\" : {\"type\" : \"boolean\"},",
+											"    },",
+											"    \"additionalProperties\" : false",
+											"}",
+											"",
+											"// setting collection variables",
+											"pm.collectionVariables.set('userSchema', JSON.stringify(userSchema));",
+											"",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"// test to compare actual vs expected schema",
+											"pm.test(\"JSON Response has the correct Schema\", ()=>{",
+											"    pm.expect(jsonData).to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"userSchema\")));    ",
+											"});",
+											"",
+											"// test to compare actual vs expected data",
+											"pm.test(\"JSON response contains the expected fields and values\", () => {",
+											"   ",
+											"    pm.expect(jsonData).to.have.property(\"email\", \"profile@test.com\");",
+											"    pm.expect(jsonData).to.have.property(\"firstName\", \"Profile\");",
+											"    pm.expect(jsonData).to.have.property(\"lastName\", \"Test\");",
+											"    pm.expect(jsonData).to.have.property(\"active\", true);",
+											"    pm.expect(jsonData).to.have.property(\"admin\", false);",
+											"    ",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"profile@test.com\",\n    \"password\":\"ProfileTest!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:7000/auth/login",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Login with valid credentials",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\":\"profile@test.com\",\n    \"password\":\"ProfileTest!\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/auth/login",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Authorization",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoicHJvZmlsZUB0ZXN0LmNvbSIsImlzcyI6IkNvbmdvIiwiaXNBZG1pbiI6ZmFsc2UsImlzQWN0aXZlIjp0cnVlLCJpYXQiOjE2NzUxODYzMDgsImV4cCI6MTY3NTI3MjcwOH0.i_OSLgqN4lL_NLFyxAg3scDWiF5IM_eRA_LFTzgmRI4"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Jan 2023 17:31:48 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"userId\": 9,\n    \"email\": \"profile@test.com\",\n    \"firstName\": \"Profile\",\n    \"lastName\": \"Test\",\n    \"active\": true,\n    \"admin\": false\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Logout endpoint returns 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Authorization header is cleared\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Authorization\")).to.be.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n    \"email\": \"tets@gmail.com\",\n    \"firstName\": \"John5\", \n    \"lastName\": \"Doe\", \n    \"password\": \"pass1234\" \n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response should be in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response should have the expected keys and values\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"userId\");",
+									"    pm.expect(jsonData).to.have.property(\"email\");",
+									"    pm.expect(jsonData).to.have.property(\"firstName\");",
+									"    pm.expect(jsonData).to.have.property(\"lastName\");",
+									"    pm.expect(jsonData).to.have.property(\"admin\", false);",
+									"    pm.expect(jsonData).to.have.property(\"active\", true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test6@gmail.com\",\n    \"firstName\": \"John5\",\n    \"lastName\": \"Doe\",\n    \"password\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register new User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response should be in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response should have the expected keys and values\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"userId\");",
+									"    pm.expect(jsonData).to.have.property(\"email\");",
+									"    pm.expect(jsonData).to.have.property(\"firstName\");",
+									"    pm.expect(jsonData).to.have.property(\"lastName\");",
+									"    pm.expect(jsonData).to.have.property(\"admin\", false);",
+									"    pm.expect(jsonData).to.have.property(\"active\", true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test18@gmail.com\",\n    \"firstName\": \"John5\",\n    \"lastName\": \"Doe\",\n    \"password\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "ProductController",
+					"item": [
+						{
+							"name": "200 status code and verified schema for get all products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"status is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"let response = pm.response.json();\r",
+											"\r",
+											"let individualProductSchema = {\r",
+											"    \"type\" : \"object\",\r",
+											"    \"properties\" : {\r",
+											"        \"id\": {\"type\" : \"number\"},\r",
+											"        \"quantity\": {\"type\" : \"number\"},\r",
+											"        \"price\": {\"type\" : \"number\"},\r",
+											"        \"description\": {\"type\" : \"string\"},\r",
+											"        \"image\": {\"type\" : \"string\"},\r",
+											"        \"name\": {\"type\" : \"string\"},\r",
+											"        \"active\": {\"type\" : \"boolean\"},\r",
+											"    },\r",
+											"    \"required\" : [\"id\", \"quantity\", \"price\", \"description\", \"image\", \"name\", \"active\"],\r",
+											"    \"additionalProperties\" : false,\r",
+											"}\r",
+											"\r",
+											"pm.collectionVariables.set('productSchema', JSON.stringify(individualProductSchema));\r",
+											"\r",
+											"pm.test(\"Returns a list of objects with correct schema\", function(){\r",
+											"    for(let i=0; i<response.length; i++){\r",
+											"         pm.expect(response[i]).to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"productSchema\")));\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "200 status code and verified schema for get product by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"status is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Correct schema for returned object\", function(){\r",
+											"    pm.expect(response).to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"productSchema\")));\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/product/1000000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"product",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "200 status cide and verified schema for searching existing element",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"status is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"returned product has correct schema\", function(){\r",
+											"    pm.expect(response[0]).to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"productSchema\")));\r",
+											"})\r",
+											"\r",
+											"//return to here and make search keyword a variable\r",
+											"pm.test(\"returned product contains correct keyword\", function(){\r",
+											"    pm.expect(response[0].name.toLowerCase()).to.include(\"Shrek\".toLowerCase());\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/product/search/shrek",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"product",
+										"search",
+										"shrek"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "401Error for DELETE item not found",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"status is 404\", function(){\r",
+											"    pm.response.to.have.status(404);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/product/1111",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"product",
+										"1111"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ECommerceOrders",
+			"item": [
+				{
+					"name": "OrderController",
+					"item": [
+						{
+							"name": "Get All Orders",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"nameynamenson@example.com\", password: \"pass123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Test data type of response\", () => {\r",
+											"    const jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an(\"array\");\r",
+											"    \r",
+											"    for (const item of jsonData)  {\r",
+											"        pm.expect(item.orderId).to.be.a(\"number\");\r",
+											"        pm.expect(item.userEmail).to.be.a(\"string\");\r",
+											"        pm.expect(item.paymentId).to.be.a(\"string\");\r",
+											"        pm.expect(item.orderDate).to.be.a(\"string\");\r",
+											"        pm.expect(item.shipmentAddress).to.be.a(\"string\");\r",
+											"    }\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "fetch('http://localhost:8080/api/order')\r\n  .then((response) => response.json())\r\n  .then((json) => console.log(json));",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order History",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"nameynamenson@example.com\", password: \"pass123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Test data type of response\", () => {\r",
+											"    const jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an(\"array\");\r",
+											"    \r",
+											"    for (const item of jsonData)  {\r",
+											"        pm.expect(item.orderId).to.be.a(\"number\");\r",
+											"        pm.expect(item.userEmail).to.be.a(\"string\");\r",
+											"        pm.expect(item.paymentId).to.be.a(\"string\");\r",
+											"        pm.expect(item.orderDate).to.be.a(\"string\");\r",
+											"        pm.expect(item.shipmentAddress).to.be.a(\"string\");\r",
+											"    }\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "fetch('http://localhost:8080/api/order/history')\r\n  .then((response) => response.json())\r\n  .then((json) => console.log(json));",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/order/history",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"order",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order by ID",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"nameynamenson@example.com\", password: \"pass123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Test data type of response\", () => {\r",
+											"    const jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an(\"object\");\r",
+											"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"    pm.expect(jsonData.userId).to.be.an(\"object\");\r",
+											"    pm.expect(jsonData.paymentId).to.be.an(\"object\");\r",
+											"\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "fetch('http://localhost:7000/api/order/8')\r\n  .then((response) => response.json())\r\n  .then((json) => console.log(json));",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/order/1000000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"order",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post New Order",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"nameynamenson@example.com\", password: \"pass123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().name).to.eql(pm.environment.get(\"name\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Test data type of response\", () => {\r",
+											"    const jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.be.an(\"object\");\r",
+											"    pm.expect(jsonData.orderId).to.be.a(\"number\");\r",
+											"    pm.expect(jsonData.userEmail).to.be.a(\"string\");\r",
+											"    pm.expect(jsonData.paymentId).to.be.a(\"string\");\r",
+											"    pm.expect(jsonData.orderDate).to.be.a(\"string\");\r",
+											"    pm.expect(jsonData.shipmentAddress).to.be.a(\"string\");\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"orderId\": 1,\r\n        \"userEmail\": \"tets@gmail.com\",\r\n        \"paymentId\": \"CC1\",\r\n        \"orderDate\": \"2023-01-01\",\r\n        \"shipmentAddress\": \"Example Address\"\r\n    }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"order"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrderDetailsController",
+					"item": [
+						{
+							"name": "OrderDetailsByID1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is less than 3000ms\", () => {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().username).to.eql(pm.environment.get(\"username\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail/1000000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrderDetailsByID2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is less than 3000ms\", () => {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().username).to.eql(pm.environment.get(\"username\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail/1000001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail",
+										"1000001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrderDetailsOrderByID1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Test data type of the response\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"array\");\r",
+											"  for (const item of jsonData)  {\r",
+											"    pm.expect(item.id).to.be.a(\"number\");\r",
+											"    pm.expect(item.ordersId).to.be.a(\"number\");\r",
+											"    pm.expect(item.quantity).to.be.a(\"number\");\r",
+											"  }\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 3000ms\", () => {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().username).to.eql(pm.environment.get(\"username\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail/order/1000001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail",
+										"order",
+										"1000001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrderDetailsOrderByID2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Test data type of the response\", () => {\r",
+											"  pm.expect(jsonData).to.be.an(\"array\");\r",
+											"  for (const item of jsonData)  {\r",
+											"    pm.expect(item.id).to.be.a(\"number\");\r",
+											"    pm.expect(item.ordersId).to.be.a(\"number\");\r",
+											"    pm.expect(item.quantity).to.be.a(\"number\");\r",
+											"  }\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 3000ms\", () => {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().username).to.eql(pm.environment.get(\"username\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail/order/1000001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail",
+										"order",
+										"1000001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Order details",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"  const jsonData = pm.response.json();\r",
+											"  \r",
+											"  pm.test(\"Test data type of the response\", () => {\r",
+											"    pm.expect(jsonData).to.be.an(\"object\");\r",
+											"      pm.expect(jsonData.id).to.be.a(\"number\");\r",
+											"      pm.expect(jsonData.ordersId).to.be.a(\"number\");\r",
+											"      pm.expect(jsonData.productId).to.be.a(\"number\");\r",
+											"      pm.expect(jsonData.quantity).to.be.a(\"number\");\r",
+											"    });\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"orderId\": 1000000,\r\n        \"productId\": 1000003,\r\n        \"quantity\": 2\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Order details",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url: \"http://localhost:7000/auth/login\",\r",
+											"    method: \"POST\",\r",
+											"    header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: \"raw\",\r",
+											"        raw: JSON.stringify({email: \"tets@gmail.com\", password: \"!test123\"})\r",
+											"    }\r",
+											"}, (err, res) => {\r",
+											"    let token;\r",
+											"\r",
+											"    console.log(res.headers.members[0]);\r",
+											"\r",
+											"    for (let header of res.headers.members) {\r",
+											"        if (header.key === \"Authorization\")\r",
+											"            token = header.value;\r",
+											"    }\r",
+											"\r",
+											"    if (!token || token === \"\") {\r",
+											"        console.log(\"No token found\")\r",
+											"    }\r",
+											"    else {\r",
+											"        pm.request.headers.add({key: \"Authorization\", value: token});\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"response must be valid and have a body\", function () {\r",
+											"     pm.response.to.be.ok;\r",
+											"     pm.response.to.be.withBody;\r",
+											"     pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is less than 3000ms\", () => {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().username).to.eql(pm.environment.get(\"username\"));\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7000/api/orderdetail/1000000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"orderdetail",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "userSchema",
+			"value": ""
+		},
+		{
+			"key": "productSchema",
+			"value": ""
+		}
+	]
+}
