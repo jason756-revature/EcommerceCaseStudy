@@ -19,7 +19,7 @@ import { CartContext } from '../../context/cart.context';
 import Product from '../../models/Product';
 import { useNavigate } from 'react-router';
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Review your order'];
 
 const products: Product[] = [
 ];
@@ -78,8 +78,6 @@ export default function Checkout() {
       case 0:
         return <AddressForm handleNext={handleNext} updateAddress={updateAddress} />;
       case 1:
-        return <PaymentForm handleNext={handleNext} handleBack={handleBack} updatePayment={updatePayment} />;
-      case 2:
         return <Review handleNext={handleNext} handleBack={handleBack} payments={paymentDetail} address={address} updateOrderId={updateOrderId} />;
       default:
         throw new Error('Unknown step');
@@ -123,8 +121,8 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is {`${orderId}`}. We have emailed your order
-                  confirmation, and will send you an update when your order has
+                  Your order has been successfully submitted! We will email you a 
+                  confirmation and will send you an update when your order has
                   shipped.
                 </Typography>
               </React.Fragment>

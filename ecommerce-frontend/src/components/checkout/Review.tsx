@@ -85,23 +85,6 @@ export default function Review(props: reviewProps) {
           <Typography gutterBottom>{`${props.address.firstName} ${props.address.lastName}`}</Typography>
           <Typography gutterBottom>{`${props.address.address1}${props.address.address2? ', ' + props.address.address2: ''}, ${props.address.city}, ${props.address.state} , ${props.address.zip}, ${props.address.country}`}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {props.payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button onClick={props.handleBack} sx={{ mt: 3, ml: 1 }}>

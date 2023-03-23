@@ -168,7 +168,7 @@ export default function PaymentForm(props: paymentFormProps) {
               }
             </Table>
         </RadioGroup>
-        <Button variant="contained" type="submit" sx={{ mt: 3, ml: 1 }}>Submit payment</Button>
+        <Button variant="contained" type="submit" sx={{ mt: 3, ml: 1 }}>Next</Button>
         <Button onClick={props.handleBack} sx={{ mt: 3, ml: 1 }}>
             Back
           </Button>

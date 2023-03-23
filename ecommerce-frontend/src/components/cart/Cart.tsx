@@ -263,14 +263,6 @@ export const Cart = () => {
               </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>{formatter.format(5.90)}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>{formatter.format(-5.90)}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>
               {formatter.format(cart.reduce<number>((total, product) => total + product.price * product.quantity, 0))}

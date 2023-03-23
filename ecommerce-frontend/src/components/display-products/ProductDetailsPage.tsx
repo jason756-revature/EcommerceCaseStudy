@@ -214,31 +214,6 @@ export const ProductDetailsPage = () => {
             </Grid>
           </Grid>
           <br />
-          <DialogContent dividers>
-            <Typography variant="h4" align="center">Leave a Review</Typography>
-            <Rating name="rating" value={newReview.rating} onChange={((event: React.SyntheticEvent<Element, Event>, value: number | null) => { if (value !== null) setNewReview({ ...newReview, rating: value }) })} />
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Product Review"
-              multiline
-              fullWidth
-              minRows={8}
-              maxRows={8}
-              value={newReview.comment}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setNewReview({ ...newReview, comment: event.target.value }) }}
-            />
-            <br /><br />
-            <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center"><Button variant="contained" onClick={onSubmitReview}>Submit Review</Button></Grid>
-            <br />
-          </DialogContent>
-          <DialogContent dividers>
-            <Typography variant="h4" align="center">Product Reviews</Typography>
-            <Grid container spacing={2} direction="column" alignItems="center" justify="center">
-              <Grid item xs={8}>
-                {reviewsMap}
-              </Grid>
-            </Grid>
-          </DialogContent>
         </Grid>
         <Grid item xs></Grid>
       </Grid>
