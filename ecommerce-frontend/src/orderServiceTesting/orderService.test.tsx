@@ -8,14 +8,14 @@ import { DisplayProducts } from '../components/display-products/DisplayProducts'
 
 test('grabs all orders for user', async () => {
     //expect.assertions(1);
-    const user = await apiLogin("rc@mail.com", "12345");
+    const user = await apiLogin("tets@gmail.com", "!test123");
     const orders = JSON.parse(`[
       {
-          "orderId": 1,
-          "userEmail": "jj@mail.com",
-          "paymentId": "ab0930e8-c631-43e9-b187-237fef52e481",
-          "orderDate": "2022-09-22",
-          "shipmentAddress": "1, 1, 1, 1, 1"
+        "orderId": 1000000,
+        "userId": "1000000",
+        "paymentId": "CC1",
+        "orderDate": "2023-01-01",
+        "shipmentAddress": "Example Address"
       }
   ]`)
     render(<OrderCard key={0} order={orders[0]}/>);
@@ -27,11 +27,11 @@ test('grabs all orders for user', async () => {
 test(`grabs no orders when not logged in`, async () =>{
     const orders = JSON.parse(`[
       {
-        "orderId": 1,
-        "userEmail": "jj@mail.com",
-        "paymentId": "ab0930e8-c631-43e9-b187-237fef52e481",
-        "orderDate": "2022-09-22",
-        "shipmentAddress": "1, 1, 1, 1, 1"
+        "orderId": 1000000,
+        "userId": "1000000",
+        "paymentId": "CC1",
+        "orderDate": "2023-01-01",
+        "shipmentAddress": "Example Address"
     }
   ]`)
   render(<DisplayProducts></DisplayProducts>);

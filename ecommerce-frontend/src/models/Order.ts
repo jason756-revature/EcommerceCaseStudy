@@ -1,13 +1,13 @@
 
 export default class Order {
     orderId: number;
-    paymentId: number;
+    paymentId: string;
     orderDate: string;
     shipmentAddress: string;
 
     constructor(
         orderId: number,
-        paymentId: number,
+        paymentId: string,
         orderDate: string,
         shipmentAddress: string
     ){

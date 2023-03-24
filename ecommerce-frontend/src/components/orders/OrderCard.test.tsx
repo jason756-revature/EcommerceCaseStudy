@@ -7,7 +7,7 @@ it('renders DisplayProduct without crashing', ()=>{
     ReactDOM.render(<OrderCard
         key={1}
         order={{orderId: 1,
-            paymentId: 1,
+            paymentId: "CC1",
             orderDate: "2023-01-01",
             shipmentAddress: "123 Candy Way" }}
             ></OrderCard>, div)

@@ -36,7 +36,7 @@ export const OrderDetails = (props : orderDetailsProps) => {
    const id = props.orderId;
    const [orderDetailsInfo, setOrderDetailsInfo] = useState<OrderDetail[]>([]);
    const [productInfo, setProductInfo] = useState<Product[]>([]);
-   const [orderInfo, setOrderInfo] = useState<Order>(new Order(0, 0, "", ""))
+   const [orderInfo, setOrderInfo] = useState<Order>(new Order(0, "", "", ""))
    const [sum, setSum] = useState<number>(0);
    useEffect(() => {
 

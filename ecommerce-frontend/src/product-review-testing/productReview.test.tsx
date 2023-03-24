@@ -15,7 +15,7 @@ interface reviewProps {
 test('Test successfull database pull and display', async () => {
 
     // retrieve all reviews
-    const user = await apiLogin("rc@mail.com", "12345");
+    const user = await apiLogin("tets@gmail.com", "!test123");
     const reviews = await apiGetAllReviews()
     
     // render the first review

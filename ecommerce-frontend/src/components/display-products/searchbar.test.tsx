@@ -2,32 +2,22 @@ import { render, screen } from "@testing-library/react"
 import { apiGetProductByKeyword } from "../../remote/e-commerce-api/productService"
 import { ProductCard } from "./ProductCard"
 
-const tshirt =  {
-    id: 2,
-    quantity: 5,
-    price: 45.0,
-    description: "A nice TeeShirt",
-    image: "https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
-    name: "TeeShirt",
+const shrek = {
+    id: 1000005,
+    quantity: 1,
+    price: 5.99,
+    description: "Keep ahead of fashion by taking these wherever you go!",
+    image: "https://cdn.pixabay.com/photo/2015/04/14/17/08/alien-722415_960_720.jpg",
+    name: "Shrek Crocs",
     active: true
 }
 
-const bag = {
-    id: 3,
-    quantity: 20,
-    price: 2.5,
-    description: "A reusable shopping bag",
-    image: "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
-    name: "Shopping Bag",
-    //active: true
-}
-
-it('searches for bag',async () => {
-    // Search for bag
-    const product = await apiGetProductByKeyword("bag")
+it('searches for shrek',async () => {
+    // Search for shrek
+    const product = await apiGetProductByKeyword("shrek")
 
     // Render product
-    render(<ProductCard product={bag} key={bag.id}></ProductCard>)
+    render(<ProductCard product={shrek} key={shrek.id}></ProductCard>)
 
     // Check if product was properly rendered
     const linkElement = screen.getByText(product.payload[0].name)
@@ -36,5 +26,5 @@ it('searches for bag',async () => {
 
 it('works with searchbar',async () => {
     expect.assertions(1);
-    return apiGetProductByKeyword("shirt").then(data => expect(data.payload[0]).toEqual(tshirt));
+    return apiGetProductByKeyword("shrek").then(data => expect(data.payload[0]).toEqual(shrek));
 })
